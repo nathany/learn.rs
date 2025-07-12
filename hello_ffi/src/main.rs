@@ -11,6 +11,7 @@ fn main() {
 
     let num2: i64 = -9876543210;
     println!("Absolute value of {num2} according to C: {}", labs(num2));
+    // On Windows this is error[E0308]: mismatched types, but on macOS it's not considered an error.
 }
 
 #[cfg(test)]
