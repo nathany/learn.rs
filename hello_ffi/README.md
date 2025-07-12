@@ -15,7 +15,7 @@ unsafe extern "C" {
 }
 ```
 
-In that case `std::ffi::c_long` would be more appropriate than `u64` -- see the docs for [c_long][].
+In that case `std::ffi::c_long` would be more appropriate than `i64` -- see the docs for [c_long][].
 
 ```rust
 use std::ffi::{c_int, c_long};
