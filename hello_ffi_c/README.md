@@ -17,7 +17,9 @@ This produces the warning:
 labs.c(35): warning C4244: 'function': conversion from 'int64_t' to 'long', possible loss of data
 ```
 
-But only because we [asked for all warnings](https://learn.microsoft.com/en-us/cpp/build/reference/compiler-option-warning-level?view=msvc-170) with /W4. The default /W1 only displays severe warnings.
+This is a level 3 warning, which would be displayed by default in the IDE but the [default on the command line][warnings] is /W1.
+
+[warnings]: https://learn.microsoft.com/en-us/cpp/build/reference/compiler-option-warning-level?view=msvc-170
 
 As expected, the output is truncated for the problematic usage:
 
