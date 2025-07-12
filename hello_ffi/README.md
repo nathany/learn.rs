@@ -36,5 +36,7 @@ In this case Rust can provide a nice compile-time error when we run cargo build:
    |                                                             arguments to this function are incorrect
 ```
 
+At least on Windows. Unfortunately there are still no compilers errors or clippy warnings on Mac.
+
 [chapter 20]: https://doc.rust-lang.org/book/ch20-01-unsafe-rust.html#using-extern-functions-to-call-external-code
 [c_long]: https://doc.rust-lang.org/1.88.0/std/ffi/type.c_long.html
