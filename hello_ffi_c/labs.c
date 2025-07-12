@@ -36,7 +36,7 @@ int main() {
     // MSVC warning:
     // labs.c(35): warning C4244: 'function': conversion from 'int64_t' to 'long', possible loss of data
     //
-    // clang warning:
+    // clang warning in editor on Windows (but not on Mac and presumably not on Linux):
     // Absolute value function 'labs' given an argument of type 'int64_t' (aka 'long long') but has parameter of
     // type 'long' which may cause truncation of value (clang -Wabsolute-value)
 
