@@ -1,14 +1,16 @@
-unsafe extern "C" {
-    safe fn abs(input: i32) -> i32;
+use std::ffi::{c_int, c_long};
 
-    safe fn labs(input: i64) -> i64;
+unsafe extern "C" {
+    safe fn abs(input: c_int) -> c_int;
+    safe fn labs(input: c_long) -> c_long;
 }
 
 fn main() {
-    println!("Absolute value of -3 according to C: {}", abs(-3));
+    let num1: i32 = -42;
+    println!("Absolute value of -3 according to C: {}", abs(num1));
 
-    let num: i64 = -9876543210;
-    println!("Absolute value of {num} according to C: {}", labs(num));
+    let num2: i64 = -9876543210;
+    println!("Absolute value of {num2} according to C: {}", labs(num2));
 }
 
 #[cfg(test)]
