@@ -56,12 +56,21 @@ Some possible cross-platform options for using long, if we actually had to:
 fn restrict_labs(n: i32) -> i32 {
     labs(n as c_long) as i32
 }
+```
 
+```rust
 fn cross_platform_labs(n: i64) -> Result<i64, &'static str> {
     let c_input: c_long = n
         .try_into()
         .map_err(|_| "Value doesn't fit in c_long on this platform")?;
     Ok(labs(c_input) as i64)
+}
+```
+
+```rust
+// Less code if "out of range integral type conversion attempted" is a sufficient error message
+fn cross_platform_labs(n: i64) -> Result<i64, std::num::TryFromIntError> {
+    Ok(labs(n.try_into()?) as i64)
 }
 ```
 
