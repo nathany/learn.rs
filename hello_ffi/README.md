@@ -53,7 +53,7 @@ At least on Windows. Unfortunately there are no compilers errors or clippy warni
 Some possible cross-platform options for using long, if we actually had to:
 
 ```rust
-fn restrict_abs(n: i32) -> i32 {
+fn restrict_labs(n: i32) -> i32 {
     labs(n as c_long) as i32
 }
 
