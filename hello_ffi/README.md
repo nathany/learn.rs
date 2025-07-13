@@ -29,15 +29,45 @@ unsafe extern "C" {
 In this case Rust can provide a nice compile-time error when we run cargo build:
 
 ```rust
-13 |     println!("Absolute value of {num2} according to C: {}", labs(num2));
-   |                                                             ---- ^^^^ expected `i32`, found `i64`
-   |                                                             |
-   |                                                             arguments to this function are incorrect
+error[E0308]: mismatched types
+ --> src\main.rs:9:65
+  |
+9 |     println!("Absolute value of {num} according to C: {}", labs(num));
+  |                                                            ---- ^^^ expected `i32`, found `i64`
+  |                                                            |
+  |                                                            arguments to this function are incorrect
+  |
+note: function defined here
+ --> src\main.rs:4:13
+  |
+4 |     safe fn labs(input: c_long) -> c_long;
+  |             ^^^^ -----
+help: you can convert an `i64` to an `i32` and panic if the converted value doesn't fit
+  |
+9 |     println!("Absolute value of {num} according to C: {}", labs(num.try_into().unwrap()));
+  |                                                                    ++++++++++++++++++++
 ```
 
-At least on Windows. Unfortunately there are still no compilers errors or clippy warnings on Mac.
+At least on Windows. Unfortunately there are no compilers errors or clippy warnings on macOS.
+
+Some possible cross-platform options for using long, if we actually had to:
+
+```rust
+fn restrict_abs(n: i32) -> i32 {
+    labs(n as c_long) as i32
+}
+
+fn cross_platform_labs(n: i64) -> Result<i64, &'static str> {
+    let c_input: c_long = n
+        .try_into()
+        .map_err(|_| "Value doesn't fit in c_long on this platform")?;
+    Ok(labs(c_input) as i64)
+}
+```
 
 [chapter 20]: https://doc.rust-lang.org/book/ch20-01-unsafe-rust.html#using-extern-functions-to-call-external-code
 [c_long]: https://doc.rust-lang.org/1.88.0/std/ffi/type.c_long.html
 
 I opened [an issue](https://github.com/rust-lang/book/issues/4443) with The Rust Programming Language book. Hopefully some minor tweaks to chapter 20 will make more readers aware of this subtle logic bug with cross-platform FFI.
+
+I also wrote a [blog post](https://nathany.com/labs/) on this topic.
